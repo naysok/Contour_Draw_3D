@@ -36,7 +36,13 @@ class ImageProcessing():
         img_r = ImageEnhance.Contrast(r)
         rr = img_r.enhance(3)
 
-        img_new = Image.merge("RGBA", (rr, rr, rr, rr))
+        ### Blue Canvas
+        canvas_size = img.size
+        c = Image.new('RGBA', canvas_size, (68, 255, 255, 255))
+        cr, cg, cb, ca = c.split()
+
+        img_new = Image.merge("RGBA", (cr, cg, cb, rr))
+        
         return img_new
 
 
