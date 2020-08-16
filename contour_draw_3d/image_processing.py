@@ -29,6 +29,13 @@ class ImageProcessing():
         return img_alpha
 
 
+    def modify_rgb(self, img):
+
+        r, g, b, a = img.split()
+        img_new = Image.merge("RGBA", (r, r, b, a))
+        return img_new
+
+
     def oparete_rgba_channel(self, img):
 
         r, g, b = img.split()
