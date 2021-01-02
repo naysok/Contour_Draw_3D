@@ -1,10 +1,14 @@
-
 ### MacOS
 .DS_Store
 
 
 ### VSCode
 .vscode/
+
+
+### images
+images/
+_images_/
 
 
 ### Python
