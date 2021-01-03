@@ -6,6 +6,11 @@
 .vscode/
 
 
+### Project Result
+_prj_/
+!_prj_/.gitkeep
+
+
 ### images
 images/
 _images_/
