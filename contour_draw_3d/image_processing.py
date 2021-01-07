@@ -5,11 +5,11 @@ from PIL import Image, ImageDraw, ImageOps, ImageEnhance
 class ImageProcessing():
 
 
-    ############################
-    ####                     ###
-    ####     I/O + Basics    ###
-    ####                     ###
-    ############################
+    ###########################
+    ###                     ###
+    ###     I/O + Basics    ###
+    ###                     ###
+    ###########################
 
 
     def open_image(self, path):
@@ -80,11 +80,11 @@ class ImageProcessing():
     ########################################
 
 
-    #####################
-    ####              ###
-    ####     Draw     ###
-    ####              ###
-    #####################
+    ####################
+    ###              ###
+    ###     Draw     ###
+    ###              ###
+    ####################
 
 
     def draw_line_sibe_clac_size(self, target_size):
