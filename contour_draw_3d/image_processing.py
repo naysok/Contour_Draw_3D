@@ -196,12 +196,10 @@ class ImageProcessing():
         return mat_2
 
 
-    def run_transform(self, img_path, img_size, mat):
+    def run_transform(self, img_src, img_size, mat):
         
         ### Run
 
-        ### Open Image
-        img_src = self.open_image(img_path)
         w0, h0 = img_src.size
         # print("img_src.size : {} x {}".format(w0, h0))
 
