@@ -134,11 +134,30 @@ class ImageProcessing():
     ########################################
 
 
-    ######################################
-    ####                               ###
-    ####     Affine Transformation     ###
-    ####                               ###
-    ######################################
+    #####################################
+    ###                               ###
+    ###     Affine Transformation     ###
+    ###     +                         ###
+    ###     Matrix Operateion         ###
+    ###                               ###
+    #####################################
+
+
+    def add_matrix_abc_def(self, mat0, mat1):
+
+        a0, b0, c0, d0, e0, f0 = mat0
+        a1, b1, c1, d1, e1, f1 = mat1
+
+        aa = a0 * a1 + b0 * d1
+        bb = a0 * b1 + b0 * e1
+        cc = c0 + c1
+        dd = d0 * a1 + e0 * d1
+        ee = d0 * b1 + e0 * e1
+        ff = f0 + f1
+
+        new_mat = [aa, bb, cc, dd, ee, ff]
+
+        return new_mat
 
 
     def affine_transform(self, img, mat):
@@ -146,3 +165,54 @@ class ImageProcessing():
         return img_aft
 
 
+    def define_matrix_for_render(self, img_size):
+        
+        ### Render
+
+        base_size = img_size
+        base_rr = 1 / 4
+
+        ### 0) Scale
+        sc = 1.0 / math.sin(math.pi * base_rr)
+        mat_scale_0 = [sc, 0, 0, 0, sc, 0]
+
+        ### 1) Rotation
+        rr = math.pi * base_rr * (-1)
+        mat_rotation = [math.cos(rr), math.sin(rr) * (-1), 0, math.sin(rr), math.cos(rr), 0]
+
+        ### 2) Scale
+        sh = 1.0 / math.sin(math.pi * base_rr) * 2.0
+        mat_scale_1 = [1.0, 0, 0, 0, sh, 0]
+
+        ### 3) Translate
+        vx = (-1) * base_size[0]
+        mat_mv = [1.0, 0, vx, 0, 1.0, 0]
+
+        ### Blend Matrix
+        mat_0 = self.add_matrix_abc_def(mat_scale_0, mat_rotation)
+        mat_1 = self.add_matrix_abc_def(mat_0, mat_scale_1)
+        mat_2 = self.add_matrix_abc_def(mat_1, mat_mv)
+
+        return mat_2
+
+
+    def run_transform(self, img_path, img_size, mat):
+        
+        ### Run
+
+        ### Open Image
+        img_src = self.open_image(img_path)
+        w0, h0 = img_src.size
+        # print("img_src.size : {} x {}".format(w0, h0))
+
+        ### Resize (800 x 800)
+        img_resize = img_src.resize(img_size, Image.LANCZOS)
+        w1, h1 = img_resize.size
+        # print("img_resize.size : {} x {}".format(w1, h1))
+
+        ### Affine Transform
+        img_affine = self.affine_transform(img_resize, mat)
+        w2, h2 = img_affine.size
+        # print("img_affine.size : {} x {}".format(w2, h2))
+
+        return img_affine
