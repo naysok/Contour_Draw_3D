@@ -216,3 +216,49 @@ class ImageProcessing():
         # print("img_affine.size : {} x {}".format(w2, h2))
 
         return img_affine
+
+
+    ########################################
+
+
+    ######################
+    ###                ###
+    ###     Render     ###
+    ###                ###
+    ######################
+
+
+    def run_render(self, img_path, img_path_before, count, i, render_size):
+
+        ### Open Images
+        img_affine = self.open_image(img_path)
+        size_affine = img_affine.size
+        # print("img_affine.size : {} x {}".format(size_affine[0], size_affine[1]))
+
+        ### MAGIC NUMBER = 1000
+        ### render_size = 1000
+        BOTTOM = 300
+        HEIGHT = 530
+
+        step = HEIGHT / count
+
+        uu = (render_size - size_affine[0]) * 0.5
+        vv = (size_affine[1] - BOTTOM) - (step * i)
+        paste_uv = (round(uu), round(vv))
+
+        # print(paste_uv)
+        
+        if i == 0:
+            img_canvas = self.create_canvas(render_size)
+            img_paste = self.paste_alpha(img_canvas, img_affine, paste_uv)
+            return img_paste
+        
+        ### Down Sampling
+        elif i%4 != 0:
+            img_canvas = self.open_image(img_path_before)
+            return img_canvas
+
+        else:
+            img_canvas = self.open_image(img_path_before)
+            img_paste = self.paste_alpha(img_canvas, img_affine, paste_uv)
+            return img_paste
