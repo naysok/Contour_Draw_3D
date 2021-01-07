@@ -37,6 +37,18 @@ class ImageProcessing():
         return img_alpha
 
 
+    def rotate_image(self, img, angle):
+
+        img_rot = img.rotate(angle, resample = Image.BICUBIC)
+        return img_rot
+
+
+    def mirror_image(self, img):
+        
+        img_mirror = ImageOps.mirror(img)
+        return img_mirror
+
+
     def modify_rgb(self, img):
 
         r, g, b, a = img.split()
@@ -252,7 +264,7 @@ class ImageProcessing():
             return img_paste
         
         ### Down Sampling
-        elif i%4 != 0:
+        elif i%2 != 0:
             img_canvas = self.open_image(img_path_before)
             return img_canvas
 
