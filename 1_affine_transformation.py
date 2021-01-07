@@ -23,6 +23,10 @@ DIR_AFF = prj_path + "image_1_affine_transformation\\"
 
 IMAGE_SIZE = (800, 800)
 
+ROT_UNIT = 90
+ROT_COUNT = 2
+### rotate = ROT_UNIT * ROT_COUNT
+
 
 ################################################################################
 
@@ -37,8 +41,8 @@ ut.prepare_prj_dir(dir_path, prj_name)
 count = ut.get_file_count(DIR_SRC)
 
 ### Define Matrix for Render
-mat = im.define_matrix_for_render(IMAGE_SIZE)
-# print("Matrix :", mat_)
+mat_aff = im.define_matrix_for_render(IMAGE_SIZE)
+# print("Matrix_Render :", mat_aff)
 
 
 for i in range(count):
@@ -53,7 +57,16 @@ for i in range(count):
     # if i == 420:
     if i >= 0:
         
-        img_eddited = im.run_transform(src_, IMAGE_SIZE, mat)
+        ### Open
+        img = im.open_image(src_)
+
+        ### (1) Rotation
+        img_rot = im.rotate_image(img, ROT_UNIT * ROT_COUNT)
+        # img_rot.show()
+        
+        ### (2) Affine Transform
+        img_eddited = im.run_transform(img_rot, IMAGE_SIZE, mat_aff)
+
         # img_eddited.show()
         im.export_image(img_eddited, aff_)
 
