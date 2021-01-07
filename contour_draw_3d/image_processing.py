@@ -1,7 +1,15 @@
 import math
 from PIL import Image, ImageDraw, ImageOps, ImageEnhance
 
+
 class ImageProcessing():
+
+
+    ############################
+    ####                     ###
+    ####     I/O + Basics    ###
+    ####                     ###
+    ############################
 
 
     def open_image(self, path):
@@ -69,6 +77,16 @@ class ImageProcessing():
         return img_resize
 
 
+    ########################################
+
+
+    #####################
+    ####              ###
+    ####     Draw     ###
+    ####              ###
+    #####################
+
+
     def draw_line_sibe_clac_size(self, target_size):
         rr = (1 / 6) * math.pi
         canvas_size = int(800.0 / (math.cos(rr) * 2)) * 2
@@ -111,6 +129,16 @@ class ImageProcessing():
             draw.line((x1, y2, cx, cy), fill=(0, 0, 255, 255))
 
         return img
+
+
+    ########################################
+
+
+    ######################################
+    ####                               ###
+    ####     Affine Transformation     ###
+    ####                               ###
+    ######################################
 
 
     def affine_transform(self, img, mat):
